@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 
 
-# Enter your candidate ID here:
-# Enter your student ID here:
+# Enter your candidate ID here: AF23176
+# Enter your student ID here: 21210302
 # Do NOT enter your name
 
 # 4QQMN506 Coursework Q5
-
+#importing libraries:
 import pandas as pd
 from datetime import datetime
 import matplotlib.pyplot as plt
@@ -20,7 +20,7 @@ import numpy as np
 import re
 from tkinter.filedialog import askopenfilename
 
-class FinancialDataApp(EasyFrame):
+class FinancialDataApp(EasyFrame): #define a GUI application class inheriting from EasyFrame
     """Stock Plotter"""
 
     def __init__(self):
