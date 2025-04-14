@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-# Enter your candidate ID here:
-# Enter your student ID here:
+# Enter your candidate ID here: AF23176
+# Enter your student ID here: 21210302
 # Do NOT enter your name
 
 # 4QQMN506 Coursework Q1
@@ -18,34 +18,42 @@ import pandas as pd
 import numpy as np
 wb_data = pd.read_csv('./Q1 data/world_bank.csv')
 wb_country_data = pd.read_csv('./Q1 data/world_bank_countries.csv')
+#reads the files "world_bank" and "world_bank_countries" from Q1 data
+#stores it in wb_data and wb_country data
 # print(wb_data.head())
 # print(wb_country_data.head(10))
+
 #%% b) Plot a line graph of the Poland Inflation Data for all dates from the wb_data DataFrame.  
-import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt  #import library
 poland_data = wb_data[wb_data['country'] == 'Poland']
 
-plt.figure(figsize=(15, 8))
+plt.figure(figsize=(15, 8)) #sets size of the figure
 poland_data.plot(x='year', y='FP.CPI.TOTL.ZG', kind='line', 
-                color='black')
+                color='black')  #plots a line graph of inflation data for poland
 
-plt.title('Poland Inflation FP.CPI.TOTL.ZG')
+plt.title('Poland Inflation FP.CPI.TOTL.ZG') #title of the plot
+#label the axis and add grid
 plt.xlabel('Year')
 plt.ylabel('Inflation in(%)')
 plt.grid(True, linestyle='--')
-plt.xticks(rotation=45)
-plt.show()
+plt.xticks(rotation=45)  #rotate x-axis labels
+plt.show() #display the plot
 
 
 #%% c) Plot a line graph of the High Income, Low & Middle Income, Low Income, 
 # Lower middle income, Middle Income and Upper Middle Income for all dates 
 # from the wb_data DataFrame. 
 import matplotlib.pyplot as plt
+#define list of income group categories to filter from the dataset
 income_group_types = ['High income', 'Low & middle income', 'Low income', 
                 'Lower middle income', 'Middle income', 'Upper middle income']
+#filter to include only specified income groups
 income_data = wb_data[wb_data['country'].isin(income_group_types)]
+#create pivot table
 income_pivot = income_data.pivot(index='year', columns='country', values='FP.CPI.TOTL.ZG')
-income_pivot = income_pivot.sort_index()
-plt.figure(figsize=(15, 8))
+income_pivot = income_pivot.sort_index()  #sort the pivot table by index (year)
+plt.figure(figsize=(15, 8))  #sets size of the figure
+#plot inflation trends for each income group
 for group in income_group_types:
     if group in income_pivot.columns:
         plt.plot(income_pivot.index, income_pivot[group], marker='o', linestyle='-', label=group)
@@ -54,7 +62,7 @@ plt.title('Inflation Rate by Income Group', fontsize=14)
 plt.xlabel('Year', fontsize=12)
 plt.ylabel('Inflation (%)', fontsize=12)
 plt.grid(True, linestyle='--', alpha=0.7)
-plt.legend(title='Income Group Types', fontsize=10)
+plt.legend(title='Income Group Types', fontsize=10)  #display legend with a title
 plt.xticks(rotation=45)
 plt.show()
 
@@ -65,11 +73,13 @@ plt.show()
 # Income groups already defined earlier
 import matplotlib.pyplot as plt
 wb_country_info = pd.read_csv('./Q1 data/world_bank_countries.csv')
+# Get aggregate names based on region and income groups
 aggregates = wb_country_info[wb_country_info['region'] == 'Aggregates']['name'].tolist()
 
 income_groups = ['High income', 'Low & middle income', 'Low income', 
                 'Lower middle income', 'Middle income', 'Upper middle income']
 aggregates.extend(income_groups)
+#add more regional/group agreggate names 
 regional_aggregates = [
     'World', 'Arab World', 'Caribbean small states', 'Central Europe and the Baltics',
     'Early-demographic dividend', 'East Asia & Pacific', 'Europe & Central Asia', 
@@ -82,15 +92,17 @@ regional_aggregates = [
     'Small states', 'South Asia', 'Sub-Saharan Africa'
 ]
 aggregates.extend(regional_aggregates)
+#Remove countries with specific aggregate patterns
 aggregate_patterns = ['excluding high income', 'IDA & IBRD countries']
 country_data = wb_data[~wb_data['country'].isin(aggregates)]
 for pattern in aggregate_patterns:
     country_data = country_data[~country_data['country'].str.contains(pattern, na=False)]
-
+#calculate mean inflation per country, sort and get top 10
 country_means = country_data.groupby('country')['FP.CPI.TOTL.ZG'].mean().reset_index()
 country_means = country_means.sort_values('FP.CPI.TOTL.ZG', ascending=False)
 top_10 = country_means.head(10)
 
+#plot bar chart for top 10 countries
 plt.figure(figsize=(14, 8))
 bars = plt.bar(top_10['country'], top_10['FP.CPI.TOTL.ZG'], color='blue')
 
@@ -100,21 +112,23 @@ plt.ylabel('Mean Inflation Rate (%)', fontsize=12)
 plt.grid(True, axis='y', linestyle='--', alpha=0.7)
 plt.xticks(rotation=45, ha='right')
 plt.show()
-
+#print a numbered list of the top 10 countries with the highest mean inflation
 print("Top 10 countries with highest mean inflation:")
 for i, (country, rate) in enumerate(zip(top_10['country'], top_10['FP.CPI.TOTL.ZG'])):
-    print(f"{i}. {country}: {rate}%")
+    print(f"{i}. {country}: {rate}%") 
 
 #%% e) What are the 5 countries with the lowest inflation data in 2020?
 # Filter for 2020 data
 
 import matplotlib.pyplot as plt
 
-data_2020 = wb_data[wb_data['year'] == 2020]
+data_2020 = wb_data[wb_data['year'] == 2020] #filters the main dataset to include only data for year 2020
+# Create a list of aggregate group names by filtering the country info DataFrame
 aggregates = wb_country_info[wb_country_info['region'] == 'Aggregates']['name'].tolist()
 income_groups = ['High income', 'Low & middle income', 'Low income', 
                 'Lower middle income', 'Middle income', 'Upper middle income']
 aggregates.extend(income_groups)
+# Add known regional and non-country groups to the list of aggregates
 regional_aggregates = [
     'World', 'Arab World', 'Caribbean small states', 'Central Europe and the Baltics',
     'Early-demographic dividend', 'East Asia & Pacific', 'Europe & Central Asia', 
@@ -127,12 +141,14 @@ regional_aggregates = [
     'Small states', 'South Asia', 'Sub-Saharan Africa'
 ]
 aggregates.extend(regional_aggregates)
+#Remove all aggregate rows from 2020 data
 countries_2020 = data_2020[~data_2020['country'].isin(aggregates)]
 aggregate_patterns = ['excluding high income', 'IDA & IBRD countries']
 for pattern in aggregate_patterns:
     countries_2020 = countries_2020[~countries_2020['country'].str.contains(pattern, na=False)]
 lowest_inflation_2020 = countries_2020.sort_values('FP.CPI.TOTL.ZG').head(5)
 
+# Print the results of five countries with the lowest inflation in 2020
 print("Five countries with the lowest inflation during 2020")
 for i, (country, inflation) in enumerate(zip(lowest_inflation_2020['country'], 
                                            lowest_inflation_2020['FP.CPI.TOTL.ZG']), 1):
@@ -158,7 +174,7 @@ def haversine(lon1, lat1, lon2, lat2):
     
     lon1, lat1, lon2, lat2 = map(radians, [lon1, lat1, lon2, lat2])
 
-    
+    #apply forumla
     dlon = lon2 - lon1 
     dlat = lat2 - lat1 
     a = sin(dlat/2)**2 + cos(lat1) * cos(lat2) * sin(dlon/2)**2
@@ -166,18 +182,19 @@ def haversine(lon1, lat1, lon2, lat2):
     r = 6371
     return c * r
 
-
+# Filter countries that have a valid capital city and coordinates
 capitals = wb_country_data[wb_country_data['capitalCity'] != ''].dropna(subset=['longitude', 'latitude'])
-
+# calculate the distance from (0,0) for each capital using haversine formula
 capitals['distance'] = capitals.apply(
     lambda row: haversine(0, 0, row['longitude'], row['latitude']), axis=1
 )
 
-furthest_capital = capitals.loc[capitals['distance'].idxmax()]
+furthest_capital = capitals.loc[capitals['distance'].idxmax()] #finds the capital city with the furthest distance from the origin
 print(f"The furthest city from coordinated (0,0) is {furthest_capital['capitalCity']} ({furthest_capital['name']}) with a distance of {furthest_capital['distance']:.2f} km")
+
 #%% h) Calculate the difference in annual mean from the highest country obtained in part d 
 #and the remotest country obtained in part g)
-
+#get the country with the highest mean inflation from the top 10
 highest_inflation_country = top_10.iloc[0]['country']
 highest_inflation_mean = top_10.iloc[0]['FP.CPI.TOTL.ZG']
 
@@ -188,13 +205,13 @@ remotest_country = furthest_capital['name']
 print(f"Remotest country: {remotest_country}")
 
 remotest_country_data = wb_data[wb_data['country'] == remotest_country]
-
+ 
 remotest_country_mean = remotest_country_data['FP.CPI.TOTL.ZG'].mean()
 print(f"Mean inflation for {remotest_country}: {remotest_country_mean}%")
-
+#calculate the difference of the country with the highest mean inflation and the lowest
 difference = highest_inflation_mean - remotest_country_mean
 print(f"Difference in annual mean inflation: {difference}%")
 
 
 
-# %%
+#%%
