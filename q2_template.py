@@ -1,12 +1,10 @@
-
 # -*- coding: utf-8 -*-
 
-# Enter your candidate ID here:
-# Enter your student ID here:
+# Enter your candidate ID here: AF23176
+# Enter your student ID here: 21210302
 # Do NOT enter your name
 
 # 4QQMN506 Coursework Q2
-
 
 #%% Import libraries
 import pandas as pd
@@ -17,16 +15,16 @@ import matplotlib.pyplot as plt
 #%% a) Import the LNS14000000.xlsx to a pandas DataFrame. See details provided. 
 #Write a function to transform the unemployment rate to a time series. 
 # Plot a line chart of the unemployment data. 
-
-
 def transform_to_timeseries(file_path, sheet_name=0):
     df = pd.read_excel(file_path, sheet_name=sheet_name) 
     data_list = []
+     # Iterate over each row where each row is equal to one year
     for _, row in df.iterrows():
         year = row['Year']
+        # Loop through each month and create a timestamped entry
         for month, month_name in enumerate(['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
-                                            'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'], 1):
-            if month_name in df.columns and not pd.isna(row[month_name]):
+                                            'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'], 1):                                    
+            if month_name in df.columns and not pd.isna(row[month_name]):  #check if month exist and has valid value
                 date = pd.Timestamp(year=int(year), month=month, day=1)
                 data_list.append({'Date': date, 'Unemployment_Rate': row[month_name]})
     ts_df = pd.DataFrame(data_list)
@@ -36,7 +34,7 @@ def transform_to_timeseries(file_path, sheet_name=0):
     return ts_df
 
 unemployment_file = './Q2 data/LNS14000000.xlsx'
-unemployment_ts = transform_to_timeseries(unemployment_file)
+unemployment_ts = transform_to_timeseries(unemployment_file) # Call the function to transform unemployment_file into time series
 
 if unemployment_ts is not None:
     plt.figure(figsize=(14, 7))
@@ -55,23 +53,20 @@ if unemployment_ts is not None:
 
 #%%  b) Are there any interesting observations you can deduce from this plot? 
 #Write answer as a comment.
-
-# Based on the provide plot we can observe the following:
-
-# We notice recessions periods followed by unenployment spikes and normal periods.
-# Latest recession periods are 2008-2010 and during Covid 2020.
-# Maximum unemployment rate was 14.7% in April 2020 during the COVID-19 pandemic.
-# After covid spike unemployment rate got back to normal levels in extremely short time compared to other recessions.
-# 2nd highest unemployment rate was nearly 10% in around 1982-1983, third highest was around 2009-2010.
-# The unemployment rate has had a downward trend since the 1982-1983 recession.
-
+"""
+The plot provides several noteworthy observations. Typically, unemployment rates tend to increase during recession periods. 
+The lastest recession periods are between 2008-2010, and during COVID 2020.
+During the COVID -19 pandemic the unemployment rate has significantly increased, reaching a peak of 14.7% in April 2020, the highest recorded rate.
+However,the rate has quickly returned to normal levels, much faster compared to previous recessions. 
+Overall the unemployment rate has had a downward trend since the 1982-1983 recession.
+"""
 
 #%% c) What is the max and min unemployment rates and on what dates. 
 #Print results to screen. 
-
+#highest unemployment rate and it's matching date:
 max_unemployment = unemployment_ts['Unemployment_Rate'].max()
 max_date = unemployment_ts['Unemployment_Rate'].idxmax()
-
+#lowest unemployment rate and it's matching date:
 min_unemployment = unemployment_ts['Unemployment_Rate'].min()
 min_date = unemployment_ts['Unemployment_Rate'].idxmin()
 
@@ -89,6 +84,7 @@ yearly_avg = unemployment_ts.groupby('Year')['Unemployment_Rate'].mean()
 yearly_df = pd.DataFrame({'Year': yearly_avg.index, 'Average_Unemployment': yearly_avg.values})
 yearly_df.set_index('Year', inplace=True)
 yearly_df = yearly_df[yearly_df.index < 2024]
+# Plot of the average unemployment rate per year:
 plt.figure(figsize=(12, 6))
 plt.plot(yearly_df.index, yearly_df['Average_Unemployment'], marker='o', linestyle='-', color='blue', linewidth=2)
 plt.title('Avg Yearly US Unemployment Rate', fontsize=16)
@@ -102,8 +98,7 @@ plt.show()
 
 #%% e) Why do we want to exclude 2024 from part d? 
 
-#We exclude 2024 because we do not have complete data for that year.
-
+#We exclude 2024 because the data for 2024 is incomplete and may not fully reflect the annual average.
 
 #%% f) Import the CUUR0000SA0.xlsx and PRS85006152.xlsx to separate DataFrames. 
 #See details provided. Using your transform
@@ -112,11 +107,11 @@ plt.show()
 #DataFrame. Due to the units, set a secondary axis and plot three 
 #separate line graphs comparing each economic time series from 2000 until current.
 
-
+#Import the files to separate DataFrames:
 cpi_file = './Q2 data/CUUR0000SA0.xlsx'
 nonfarm_file = './Q2 data/CES0000000001.xlsx'
 
-
+ #transform CPI and nonfarm data into a time series and rename them:
 cpi_timeseries = transform_to_timeseries(cpi_file)
 if cpi_timeseries is not None and 'Unemployment_Rate' in cpi_timeseries.columns:
     cpi_timeseries.rename(columns={'Unemployment_Rate': 'CPI'}, inplace=True)
@@ -138,9 +133,9 @@ print(nonfarm_ts.head())
 combined_data = unemployment_ts.join([cpi_timeseries, nonfarm_ts], how='outer')
 
 
-combined_data = combined_data[combined_data.index >= '2000-01-01']
+combined_data = combined_data[combined_data.index >= '2000-01-01'] #Filters data to include only records from the year 2000 onwards
 
-
+#Create a plot with three indicators together
 fig, ax1 = plt.subplots(figsize=(16, 8))
 color1 = 'tab:blue'
 ax1.set_xlabel('Date', fontsize=12)
@@ -163,7 +158,7 @@ ax3.plot(combined_data.index, combined_data['Nonfarm_Employment'],
             label='Nonfarm Employment', color=color3, linewidth=2, linestyle='-.')
 ax3.tick_params(axis='y', labelcolor=color3)
 plt.title('US Economic Indicators ', fontsize=16)
-
+# Combine legends from all three plots and place below the chart
 lines1, labels1 = ax1.get_legend_handles_labels()
 lines2, labels2 = ax2.get_legend_handles_labels()
 lines3, labels3 = ax3.get_legend_handles_labels()
