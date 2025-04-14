@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 
-# Enter your candidate ID here:
-# Enter your student ID here:
+# Enter your candidate ID here: AF23176
+# Enter your student ID here: 21210302
 # Do NOT enter your name
 
 # 4QQMN506 Coursework Q3
 
-import breezypythongui as bpg  
-from datetime import datetime
+import breezypythongui as bpg   #Importing breezypythongui for creating the GUI
+from datetime import datetime #Importing datetime to work with dates and times
 
 class AgeCalculator(bpg.EasyFrame):
     """Age Calculator Application """
@@ -15,8 +15,8 @@ class AgeCalculator(bpg.EasyFrame):
     def __init__(self):
         
         bpg.EasyFrame.__init__(self, title="Age Calculator", width=400, height=600)
-        self.addLabel("Enter Your Birthdate", 0, 0, columnspan=2)
-        
+        self.addLabel("Enter Your Birthdate", 0, 0, columnspan=2) #Initializies Age calculator GUI frame
+        # Adding input fields for the user to enter their birth year, month, and day:
         self.addLabel("Year (Enter Integer):", 1, 0)
         self.birthYear = self.addIntegerField(0, 1, 1)
         
@@ -32,17 +32,16 @@ class AgeCalculator(bpg.EasyFrame):
         self.birthHour = self.addIntegerField(0, 5, 1)
         
         self.addLabel("Minute:(Enter Integer between 0-59)", 6, 0)
-        self.birthMinute = self.addIntegerField(0, 6, 1)
+        self.birthMinute = self.addIntegerField(0, 6, 1)  #input fields for user to enter their birthday
         
-        self.addButton("Calculate", 7, 0, command=self.calculate)
-        self.addButton("Clear", 8, 0, command=self.clear)
+        self.addButton("Calculate", 7, 0, command=self.calculate)  #button for calculation
+        self.addButton("Clear", 8, 0, command=self.clear) #button for clearing
         
-        self.outputArea = self.addTextArea("", 9, 0, columnspan=2, width=50, height=5)
-    
+        self.outputArea = self.addTextArea("", 9, 0, columnspan=2, width=50, height=5)#text area to display the results
     def calculate(self):
         
         try:
-            
+             #Check if the user has filled in all the fields
             if (self.birthYear.getValue() == 0 or 
                 self.birthMonth.getValue() == 0 or
                 self.birthDay.getValue() == 0 ):
@@ -59,7 +58,7 @@ class AgeCalculator(bpg.EasyFrame):
             hour = self.birthHour.getNumber()
             minute = self.birthMinute.getNumber()
             
-            
+             # Checking for valid values in the input fields:
             error_message = ""
             if month < 1 or month > 12:
                 error_message += "Month must be between 1 and 12.\n"
@@ -85,9 +84,9 @@ class AgeCalculator(bpg.EasyFrame):
                 if birth_datetime > current_datetime:
                     self.messageBox(title="Invalid Date", 
                                    message="Birth date cannot be in the future.",
-                                   width=30)
+                                   width=30)  #Get invalid date if birthdate is in the future
                     return
-                                   
+                #Calculating the time(years,days,hours,minutes,seconds) difference between the current date and the birthdate                   
                 time_diff = current_datetime - birth_datetime              
                 total_seconds = time_diff.total_seconds()                
                 
@@ -124,7 +123,7 @@ class AgeCalculator(bpg.EasyFrame):
         self.outputArea.setText("")
 
 def main():    
-    AgeCalculator().mainloop()
+    AgeCalculator().mainloop()# Main method to run the AgeCalculator application
 
 if __name__ == "__main__":
     main()
