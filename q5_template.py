@@ -24,7 +24,7 @@ class FinancialDataApp(EasyFrame): #define a GUI application class inheriting fr
     """Stock Plotter"""
 
     def __init__(self):
-        
+       #sets up the window and widgets
         EasyFrame.__init__(self, title="Stock Plotter", width=1000, height=700)
         
         # Initialize variables
@@ -45,16 +45,16 @@ class FinancialDataApp(EasyFrame): #define a GUI application class inheriting fr
         
         
         self.addLabel("Start Date (dd/mm/yyyy):", 3, 0)
-        self.startDateField = self.addTextField("", 3, 1)
+        self.startDateField = self.addTextField("", 3, 1) #Text field that allows user to enter start date
         
         
         self.addLabel("End Date (dd/mm/yyyy):", 4, 0)
-        self.endDateField = self.addTextField("", 4, 1)
+        self.endDateField = self.addTextField("", 4, 1) #Text field that allows user to enter end date
         
         
         self.addButton("Plot", 5, 1, command=self.plot_data)
         self.addButton("Clear All", 5, 2, command=self.clear_all)
-        self.plotPanel = self.addPanel(7, 0, rowspan=4, columnspan=2, background="white")
+        self.plotPanel = self.addPanel(7, 0, rowspan=4, columnspan=2, background="white") #Panel to display the plot
         self.addButton("Calculate Return", 10, 1, command=self.calculate_return)
         self.addButton("Calculate Std Dev", 10, 2, command=self.calculate_std_dev)
         
@@ -64,7 +64,8 @@ class FinancialDataApp(EasyFrame): #define a GUI application class inheriting fr
         
         
     def load_csv(self):        
-        try:            
+        try:    
+            #open file dialog to select CSV file
             file_path = askopenfilename(
                 title="Select CSV File",
                 filetypes=[("CSV Files", "*.csv"), ("All Files", "*.*")]
@@ -74,15 +75,15 @@ class FinancialDataApp(EasyFrame): #define a GUI application class inheriting fr
             if not file_path:
                 return
                 
-            self.df = pd.read_csv(file_path)           
+            self.df = pd.read_csv(file_path)   #loads CSV into DataFrame        
 
-            self.df['Date'] = pd.to_datetime(self.df['Dates'], format='%d/%m/%Y')
+            self.df['Date'] = pd.to_datetime(self.df['Dates'], format='%d/%m/%Y')  #Converts 'Dates' to datetime format
             
             
-            self.df.set_index('Date', inplace=True)
+            self.df.set_index('Date', inplace=True)  #date is set as index
             
             
-            ric_codes = list(self.df.columns)
+            ric_codes = list(self.df.columns) #get list
             
             # Update the RIC 
             self.ricCombo["values"] = ric_codes
@@ -94,7 +95,7 @@ class FinancialDataApp(EasyFrame): #define a GUI application class inheriting fr
             messagebox.showerror("Error", f"Error with CSV file: {str(e)}")
     
     def validate_input(self):
-        
+         #checks if CSV has been loaded
         if self.df is None:
             messagebox.showerror("Error", "Please load a CSV file first.")
             return None
@@ -132,7 +133,7 @@ class FinancialDataApp(EasyFrame): #define a GUI application class inheriting fr
                     messagebox.showerror("Error", "Start date must be earlier date than end date.")
                 return None
             
-            
+            #check if dates are within the available data range:
             min_date = self.df.index.min()
             max_date = self.df.index.max()
             
@@ -151,24 +152,24 @@ class FinancialDataApp(EasyFrame): #define a GUI application class inheriting fr
             return None
             
     def plot_data(self):
-        
+         # validate inputs
         validation_result = self.validate_input()
         if validation_result is None:
             return
             
         selected_ric, start_date, end_date = validation_result
         
-        
+        #filter data for the given RIC and date range(start and end date)
         filtered_data = self.df.loc[start_date:end_date, selected_ric]
         
         
         self.clear_plot()
         
-        
+        #to create a new figure and axis:
         self.fig = Figure(figsize=(7, 4), dpi=100)
         self.ax = self.fig.add_subplot(111)
         
-        
+        #plot the data:
         self.ax.plot(filtered_data.index, filtered_data, 'b-')
         self.ax.set_title(f"{selected_ric} Stock Price")
         self.ax.set_xlabel("Date")
@@ -181,7 +182,7 @@ class FinancialDataApp(EasyFrame): #define a GUI application class inheriting fr
         
         self.fig.tight_layout()
         
-        
+         #put the plot in the GUI panel
         if self.canvas_widget is None:
             
             self.canvas = FigureCanvasTkAgg(self.fig, master=self.plotPanel)
@@ -205,7 +206,7 @@ class FinancialDataApp(EasyFrame): #define a GUI application class inheriting fr
         
         filtered_data = self.df.loc[start_date:end_date, selected_ric]
         
-        
+        #calculates the return value
         start_price = filtered_data.iloc[0]
         end_price = filtered_data.iloc[-1]
         return_value = ((end_price - start_price) / start_price) * 100
@@ -226,7 +227,7 @@ class FinancialDataApp(EasyFrame): #define a GUI application class inheriting fr
         filtered_data = self.df.loc[start_date:end_date, selected_ric]
         
         
-        std_dev = np.std(filtered_data)
+        std_dev = np.std(filtered_data) #calculates standard deviation
         
         
         messagebox.showinfo("Standard Deviation", 
@@ -240,7 +241,7 @@ class FinancialDataApp(EasyFrame): #define a GUI application class inheriting fr
         self.clear_plot()
     
     def clear_plot(self):
-        
+        #removes the plot from GUI if it exists
         if self.canvas_widget is not None:
             self.canvas_widget.pack_forget()
             self.canvas_widget = None
