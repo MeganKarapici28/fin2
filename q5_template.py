@@ -66,7 +66,7 @@ class FinancialDataApp(EasyFrame): #define a GUI application class inheriting fr
         
     def load_csv(self):        
         try:    
-            #open file dialog to select CSV file
+            #opens file dialog to select CSV file
             file_path = askopenfilename(
                 title="Select CSV File",
                 filetypes=[("CSV Files", "*.csv"), ("All Files", "*.*")]
@@ -101,13 +101,13 @@ class FinancialDataApp(EasyFrame): #define a GUI application class inheriting fr
             messagebox.showerror("Error", "Please load a CSV file first.")
             return None
         
-        #get selected RIC
+        #gets selected RIC:
         selected_ric = self.ricCombo.getText()
         if not selected_ric:
             messagebox.showerror("Error", "Please fill in all fields.")
             return None
         
-        #get date a strings
+        #gets date a strings:
         start_date_str = self.startDateField.getText().strip()
         end_date_str = self.endDateField.getText().strip()
         
@@ -115,7 +115,7 @@ class FinancialDataApp(EasyFrame): #define a GUI application class inheriting fr
             messagebox.showerror("Error", "Please fill in all fields.")
             return None
         
-        #check that the start and end dates follow the dd/mm/yyyy fromat
+        #checks that the start and end dates follow the dd/mm/yyyy fromat:
         date_pattern = r'^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/\d{4}$'
         if not re.match(date_pattern, start_date_str) or not re.match(date_pattern, end_date_str):
             messagebox.showerror("Error", "Incorrect date format. Please use dd/mm/yyyy.")
@@ -160,7 +160,7 @@ class FinancialDataApp(EasyFrame): #define a GUI application class inheriting fr
             
         selected_ric, start_date, end_date = validation_result
         
-        #filter data for the given RIC and date range(start and end date)
+        #filters data for the given RIC and date range(start and end date):
         filtered_data = self.df.loc[start_date:end_date, selected_ric]
         
         
@@ -170,7 +170,7 @@ class FinancialDataApp(EasyFrame): #define a GUI application class inheriting fr
         self.fig = Figure(figsize=(7, 4), dpi=100)
         self.ax = self.fig.add_subplot(111)
         
-        #plot the data:
+        #plots the data:
         self.ax.plot(filtered_data.index, filtered_data, 'b-')
         self.ax.set_title(f"{selected_ric} Stock Price")
         self.ax.set_xlabel("Date")
