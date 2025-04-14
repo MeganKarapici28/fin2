@@ -38,6 +38,7 @@ class FinancialDataApp(EasyFrame): #define a GUI application class inheriting fr
         self.setupUI()
     
     def setupUI(self): 
+        #Sets up  GUI components (buttons, labels, input fields, and the plot panel)
         self.addButton("Enter CSV File", 1, 0, command=self.load_csv)        
         
         self.addLabel("Select RIC:", 2, 0)
@@ -73,7 +74,7 @@ class FinancialDataApp(EasyFrame): #define a GUI application class inheriting fr
             
            
             if not file_path:
-                return
+                return #do nothing if no file selected
                 
             self.df = pd.read_csv(file_path)   #loads CSV into DataFrame        
 
@@ -100,13 +101,13 @@ class FinancialDataApp(EasyFrame): #define a GUI application class inheriting fr
             messagebox.showerror("Error", "Please load a CSV file first.")
             return None
         
-        
+        #get selected RIC
         selected_ric = self.ricCombo.getText()
         if not selected_ric:
             messagebox.showerror("Error", "Please fill in all fields.")
             return None
         
-        
+        #get date a strings
         start_date_str = self.startDateField.getText().strip()
         end_date_str = self.endDateField.getText().strip()
         
@@ -114,7 +115,7 @@ class FinancialDataApp(EasyFrame): #define a GUI application class inheriting fr
             messagebox.showerror("Error", "Please fill in all fields.")
             return None
         
-        
+        #check that the start and end dates follow the dd/mm/yyyy fromat
         date_pattern = r'^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/\d{4}$'
         if not re.match(date_pattern, start_date_str) or not re.match(date_pattern, end_date_str):
             messagebox.showerror("Error", "Incorrect date format. Please use dd/mm/yyyy.")
@@ -125,7 +126,7 @@ class FinancialDataApp(EasyFrame): #define a GUI application class inheriting fr
             start_date = datetime.strptime(start_date_str, "%d/%m/%Y")
             end_date = datetime.strptime(end_date_str, "%d/%m/%Y")
             
-            
+             #check that start date is before end date
             if start_date >= end_date:
                 if start_date == end_date:
                     messagebox.showerror("Error", "Start date and end date cannot be the same.")
