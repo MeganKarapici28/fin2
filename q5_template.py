@@ -27,7 +27,7 @@ class FinancialDataApp(EasyFrame): #define a GUI application class inheriting fr
         
         EasyFrame.__init__(self, title="Stock Plotter", width=1000, height=700)
         
-        
+        # Initialize variables
         self.df = None
         self.fig = None
         self.canvas = None
