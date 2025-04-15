@@ -119,7 +119,6 @@ for i, (country, rate) in enumerate(zip(top_10['country'], top_10['FP.CPI.TOTL.Z
 
 #%% e) What are the 5 countries with the lowest inflation data in 2020?
 # Filter for 2020 data
-
 import matplotlib.pyplot as plt
 
 data_2020 = wb_data[wb_data['year'] == 2020] #filters the main dataset to include only data for year 2020
