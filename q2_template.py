@@ -174,46 +174,46 @@ plt.show()
 
 
 
-
 #%% g) What economic conclusions / observations can you make between these 
 #three time series plots over the last 20 years? 
 # Write your answer as a comment. Specifically discuss the 2020 to 2022 period.  
+"""
+ Economic observations from the time series plots:
 
-# Economic observations from the time series plots:
+ 1. General patterns between 2000 and 2020:
+ - Economic indicators show clear cyclical patterns corresponding to economic expansions and recessions.
+ - The 2008-2009 Great Recession shows gradual deterioration and slow recovery in all metrics.
+ - Prior to 2020, economic cycles have followed predictable patterns with gradual changes.
 
-# 1. General patterns (2000-2020):
-#    - Economic indicators show clear cyclical patterns corresponding to economic expansions and recessions
-#    - The 2008-2009 Great Recession shows gradual deterioration and slow recovery in all metrics
-#    - Prior to 2020, economic cycles followed predictable patterns with gradual changes
+ 2. 2020-2022 COVID period observations:
+ - Unprecedented volatility: All three indicators show extreme movements in a short timeframe
+ - Unemployment: Rose sharply from ~3.5% to ~15% in just two months (March-April 2020), then recovered 
+   much faster than after previous recessions.
+ - CPI: It initially dropped during early pandemic months, then has shown dramatic inflation spike 
+   starting in early 2021, reaching levels not seen in decades.
+ - Nonfarm Employment: Experienced severe contraction (a loss of ~22 million jobs) followed by
+   relatively rapid but incomplete recovery.
 
-# 2. 2020-2022 COVID period observations:
-#    - Unprecedented volatility: All three indicators showed extreme movements in a compressed timeframe
-#    - Unemployment: Skyrocketed from ~3.5% to ~15% in just two months (March-April 2020), then recovered 
-#      much faster than after previous recessions
-#    - CPI: Initially dropped during early pandemic months, then showed dramatic inflation spike 
-#      starting in early 2021, reaching levels not seen in decades
-#    - Nonfarm Employment: Experienced severe contraction (loss of ~22 million jobs) followed by
-#      relatively rapid but incomplete recovery
+ 3. Unusual relationships during 2020-2022:
+ - Traditional economic relationships were disrupted - normally high unemployment correlated with 
+   low inflation, but during 2021-2022 both high inflation and relatively higher unemployment were observed.
+ - Employment recovery occurred at different rates across sectors, unlike typical recessions where recovery is more evenly spread.
+ - The rapid recovery in employment and economic activity contributed to supply chain disruptions,
+   further fueling inflation.
 
-# 3. Unusual relationships during 2020-2022:
-#    - Traditional economic relationships were disrupted - normally high unemployment correlates with 
-#      low inflation, but 2021-2022 saw both high inflation and relatively higher unemployment
-#    - Employment recovery occurred at different rates across sectors, unlike typical recessions
-#    - The rapid recovery in employment and economic activity contributed to supply chain disruptions,
-#      further fueling inflation
+ 4. Policy influences (2020-2022):
+ - Unprecedented fiscal and monetary interventions (stimulus packages, expanded unemployment benefits,
+   low interest rates) likely accelerated the recovery of employment and consumption.
+ - These same policies, combined with supply chain disruptions, might have contributed to the inflation surge.
+ - The data reflects a policy tradeoff between supporting employment recovery and controlling inflation.
 
-# 4. Policy influences (2020-2022):
-#    - Unprecedented fiscal and monetary interventions (stimulus packages, expanded unemployment benefits,
-#      low interest rates) likely accelerated the recovery of employment and consumption
-#    - These same policies, combined with supply chain disruptions, contributed to the inflation surge
-#    - The data reflects a policy tradeoff between supporting employment recovery and controlling inflation
-
-# 5. Long-term implications:
-#    - The COVID period represents a unique economic shock that doesn't follow traditional recession patterns
-#    - The inflation surge that began in 2021 has forced policy responses (interest rate increases) that 
-#      will influence economic indicators beyond the timeframe shown in these plots
-#    - Labor market dynamics fundamentally changed with persistent mismatches between job openings and 
-#      available workers, even as unemployment recovered
+ 5. Long-term implications:
+ - The COVID period represents a unique economic shock that does not follow traditional recession patterns.
+ - The inflation surge that began in 2021 has triggered policy responses (interest rate increases) that 
+   are likely to influence economic indicators beyond the timeframe shown in the plots.
+ - Labor market dynamics have fundamentally changed with constant mismatches between job openings and 
+   available workers, despite the fact that unemployment has recovered.
+"""
 
 
 #%%
