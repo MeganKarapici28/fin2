@@ -257,30 +257,3 @@ def main():
 if __name__ == "__main__":
     main()
 
-
-
-
-
-
-
-#  Comments on the code below are not related to the above code 
-# 5.6
-# A GUI application is more user friendly, and users interact easily, 
-# while in terminal-based interface would require users to remember different kind of commands
-# and reference a documentation. This app requires vizualizing plots of stocks 
-# and statistical ones and doing this with a terminal is not suitable, instead for a GUI application 
-# can display and implement visual elements like charts and plots. 
-# GUIs are easier for error handling communicating errors and easier for uploading files 
-# and working with data compared to terminal based applications which would require rememberin 
-# and using complicated commands. You can learn and work faster with GUI apps. 
-# You can do things simultaneously instead of writing a separate command on terminal.
-
-# 5.7
-# 5.8What are instance variables, and what role does the name self play in the context of a class definition?
-# A class when is initiated by the init method creates an instance of itself 
-# and is called an object. 
-# The object contains certain variables and methods and is referenced as self.
-# and object uses its class as a blueprint but can contain different values of its instance variables 
-# example class Person creates an personobject= self.hair_color  is related to that specific person
-# 5.9
-# 5.10
