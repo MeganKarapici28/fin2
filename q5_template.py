@@ -251,7 +251,7 @@ class FinancialDataApp(EasyFrame): #define a GUI application class inheriting fr
             self.canvas = None
 
 def main():
-    
+    #main function runs the FinancialDataApp application
     FinancialDataApp().mainloop()
 
 if __name__ == "__main__":
