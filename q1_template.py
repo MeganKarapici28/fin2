@@ -36,8 +36,8 @@ plt.title('Poland Inflation FP.CPI.TOTL.ZG') #title of the plot
 plt.xlabel('Year')
 plt.ylabel('Inflation in(%)')
 plt.grid(True, linestyle='--')
-plt.xticks(rotation=45)  #rotate x-axis labels
-plt.show() #display the plot
+plt.xticks(rotation=45)  #rotates x-axis labels
+plt.show() #displays the plot
 
 
 #%% c) Plot a line graph of the High Income, Low & Middle Income, Low Income, 
